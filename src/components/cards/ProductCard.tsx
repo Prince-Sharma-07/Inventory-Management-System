@@ -1,0 +1,29 @@
+import React from "react";
+import { Product } from "../../../generated/prisma";
+
+export default function ProductCard({ product }: { product: Product }) {
+  return (
+    <div className="card bg-base-100 w-85 shadow-sm">
+      <figure>
+        <img
+          src={product.imageUrl}
+          alt="product_image"
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">
+          {product.title}
+          <div className="badge badge-secondary px-2">NEW</div>
+        </h2>
+        <p>
+          {product.description}
+        </p>
+        <span>Price: ${product.price}</span>
+        <div className="card-actions justify-end">
+          <div className="badge border-white border px-2 min-w-10 rounded-2xl">{product.category}</div>
+          <div className="badge border-white border px-2 min-w-10 rounded-2xl">{product.stock} remaining</div>
+        </div>
+      </div>
+    </div>
+  );
+}

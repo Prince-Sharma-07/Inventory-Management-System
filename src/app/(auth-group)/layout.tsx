@@ -1,0 +1,18 @@
+import Header from "@/components/layout/Header";
+import UserContextProvider from "@/contexts/UserContextProvider";
+import { getUserFromCookies } from "@/lib/helper";
+import { redirect } from "next/navigation";
+import React, { ReactNode } from "react";
+
+export default async function layout({ children }: { children: ReactNode }) {
+  const user = await getUserFromCookies();
+  if (!user) redirect("/login");
+  return (
+    <div className="">
+      <UserContextProvider user={user}>
+        <Header />
+        {children}
+      </UserContextProvider>
+    </div>
+  );
+}

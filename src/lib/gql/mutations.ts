@@ -1,0 +1,53 @@
+import { gql } from "graphql-request";
+
+export const CREATE_USER = gql`
+  mutation CreateUser(
+    $name: String!
+    $email: String!
+    $username: String!
+    $password: String!
+    $role: String!
+  ) {
+    createdUser: createUser(
+      name: $name
+      email: $email
+      username: $username
+      password: $password
+      role: $role
+    ) {
+      id
+      name
+      username
+      email
+      role
+    }
+  }
+`;
+
+export const CREATE_PRODUCT = gql`
+  mutation AddProduct(
+    $title: String!
+    $description: String!
+    $category: String!
+    $price: Float!
+    $stock: Int!
+    $imageUrl: String!
+  ) {
+    createdProduct: addProduct(
+      title: $title
+      description: $description
+      category: $category
+      price: $price
+      stock: $stock
+      imageUrl: $imageUrl
+    ) {
+      title
+    }
+  }
+`;
+
+export const CREATE_SALE = gql`
+  mutation CreateSale($id: String!, $quantity: Int!) {
+    createSale(id: $id, quantity: $quantity)
+  }
+`;
