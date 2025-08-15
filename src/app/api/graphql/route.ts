@@ -12,6 +12,7 @@ import {
   createUser,
   getAllUsers,
   loginUser,
+  logoutUser,
   updateUserProfile,
   updateUserRole,
 } from "./resolvers/user";
@@ -20,6 +21,7 @@ import typeDefs from "./typeDefs";
 const resolvers = {
   Query: {
     loginUser,
+    logoutUser,
     currentUser: getUserFromCookies,
     getAllUsers,
     getAllProducts,
@@ -40,8 +42,12 @@ const server = new ApolloServer({
 });
 
 // Typescript: req has the type NextRequest
-const handler = startServerAndCreateNextHandler<NextRequest>(server, {
-  context: async (req) => ({ req }),
-});
+const handler = startServerAndCreateNextHandler(server);
 
-export { handler as GET, handler as POST };
+export async function GET(request: NextRequest) {
+  return handler(request);
+}
+
+export async function POST(request: NextRequest) {
+  return handler(request);
+}

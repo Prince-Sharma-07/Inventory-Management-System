@@ -20,9 +20,9 @@ export default function AllProducts() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 py-4">
+    <div className="flex flex-col gap-4 py-4 w-full">
       <h1 className="text-4xl text-center">All Products</h1>
-      <div className="grid grid-cols-3 gap-10">
+      <div className="grid grid-cols-3 gap-4">
         {products.map((product) => (
           <Link key={product.id} href={"/product/" + product.id}>
             <ProductCard product={product} />

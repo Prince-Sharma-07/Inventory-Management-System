@@ -12,6 +12,7 @@ type Param = Promise<{
 
 export default async function page({ params }: { params: Param }) {
   const { id } = await params;
+  
   let product;
   try {
     const res: {

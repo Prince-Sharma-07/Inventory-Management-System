@@ -1,20 +1,27 @@
 "use client";
 import { UserWithoutPassword } from "@/types";
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 const userContext = createContext<{
-  user?: UserWithoutPassword;
-}>({});
+  user: UserWithoutPassword | null;
+  setUser: (val: UserWithoutPassword | null) => void;
+}>({
+  user : null,
+  setUser: ()=>{}
+});
 
 export default function UserContextProvider({
   children,
-  user,
+  currUser,
 }: {
   children: ReactNode;
-  user: UserWithoutPassword;
+  currUser: UserWithoutPassword | null;
 }) {
+  const [user, setUser] = useState<UserWithoutPassword | null>(currUser);
   return (
-    <userContext.Provider value={{ user }}>{children}</userContext.Provider>
+    <userContext.Provider value={{ user, setUser }}>
+      {children}
+    </userContext.Provider>
   );
 }
 

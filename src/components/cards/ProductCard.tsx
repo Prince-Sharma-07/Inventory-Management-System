@@ -3,7 +3,7 @@ import { Product } from "../../../generated/prisma";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <div className="card bg-base-100 w-85 shadow-sm">
+    <div className="card shadow-card dark:bg-base-100 w-85">
       <figure>
         <img
           src={product.imageUrl}

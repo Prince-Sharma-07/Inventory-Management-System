@@ -3,6 +3,7 @@ import { gql } from "graphql-request";
 const typeDefs = gql`
   type Query {
     loginUser(userCred: String!, password: String!): Boolean
+    logoutUser: Boolean
     currentUser: User
     getAllUsers: [User]
     getAllProducts: [Product]

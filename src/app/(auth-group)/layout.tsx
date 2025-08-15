@@ -6,10 +6,10 @@ import React, { ReactNode } from "react";
 
 export default async function layout({ children }: { children: ReactNode }) {
   const user = await getUserFromCookies();
-  if (!user) redirect("/login");
+  // if (!user) redirect("/login");
   return (
     <div className="">
-      <UserContextProvider user={user}>
+      <UserContextProvider currUser={user}>
         <Header />
         {children}
       </UserContextProvider>

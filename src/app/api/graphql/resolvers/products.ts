@@ -1,5 +1,5 @@
 import prismaClient from "@/lib/services/prisma";
-import { Product, ProductCategory } from "../../../../../generated/prisma";
+import { ProductCategory } from "../../../../../generated/prisma";
 
 export async function addProduct(
   _: any,

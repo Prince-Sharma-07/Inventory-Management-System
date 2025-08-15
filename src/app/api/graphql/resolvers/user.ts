@@ -1,9 +1,8 @@
 import { getUserFromCookies } from "@/lib/helper";
-
+import { createToken } from "@/lib/services/jwt";
+import prismaClient from "@/lib/services/prisma";
 import { cookies } from "next/headers";
 import { RoleType } from "../../../../../generated/prisma";
-import prismaClient from "@/lib/services/prisma";
-import { createToken } from "@/lib/services/jwt";
 
 export async function loginUser(
   _: any,
@@ -34,7 +33,8 @@ export async function loginUser(
     } else {
       return false;
     }
-  } catch (err) {
+  } catch (err: any) {
+    console.log("Error while login ", err.message);
     return false;
   }
 }
@@ -121,7 +121,6 @@ export async function updateUserProfile(
 }
 
 export async function getAllUsers() {
- 
   try {
     const users = await prismaClient.user.findMany({
       where: {
@@ -133,5 +132,16 @@ export async function getAllUsers() {
     return users;
   } catch (err) {
     return null;
+  }
+}
+
+export async function logoutUser() {
+  try {
+    const cookie = await cookies();
+    cookie.delete("token");
+    return true;
+  } catch (err: any) {
+    console.log("error on logout ", err.message);
+    return false;
   }
 }

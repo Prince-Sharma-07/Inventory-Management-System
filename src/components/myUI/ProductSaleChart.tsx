@@ -28,7 +28,7 @@ const data = [
 export default function ProductSaleChart({
   chartData,
 }: {
-  chartData: { date: string; quantity: number };
+  chartData: { date: string; quantity: number }[];
 }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
