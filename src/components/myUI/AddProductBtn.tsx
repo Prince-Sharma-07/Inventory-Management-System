@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { CREATE_PRODUCT } from "@/lib/gql/mutations";
 import gqlClient from "@/lib/services/graphQL";
-import { PlusIcon } from "lucide-react";
+import { PackagePlus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Product } from "../../../generated/prisma";
@@ -68,12 +68,13 @@ export function AddProductBtn() {
   }
 
   return (
-    <Dialog>
-      <form>
+    <Dialog
+    >
+      <form className="flex items-center">
         <DialogTrigger asChild>
-          <Button className="cursor-pointer" variant="outline">
+          <Button  className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white font-medium rounded cursor-pointer" >
             {" "}
-            <PlusIcon /> product
+            <PackagePlus /> Product
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
@@ -129,7 +130,7 @@ export function AddProductBtn() {
               />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="stock-1">Price</Label>
+              <Label htmlFor="stock-1">Stock</Label>
               <Input
                 id="stock-1"
                 name="stock"

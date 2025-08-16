@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   User,
   Mail,
@@ -10,6 +10,9 @@ import {
   Save,
   X,
 } from "lucide-react";
+import { Avatar } from "@radix-ui/themes";
+import gqlClient from "@/lib/services/graphQL";
+import { useUserContext } from "@/contexts/UserContextProvider";
 
 interface UserProfile {
   id: string;
@@ -23,17 +26,18 @@ interface UserProfile {
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
-  
-  const [user, setUser] = useState<UserProfile>({
-    id: "507f1f77bcf86cd799439011",
-    name: "Sarah Johnson",
-    email: "sarah.johnson@company.com",
-    username: "sarahj",
-    password: "••••••••••",
-    avatar: undefined,
-    role: "staff",
-  });
 
+  // const [user, setUser] = useState<UserProfile>({
+  //   id: "507f1f77bcf86cd799439011",
+  //   name: "Sarah Johnson",
+  //   email: "sarah.johnson@company.com",
+  //   username: "sarahj",
+  //   password: "••••••••••",
+  //   avatar: undefined,
+  //   role: "staff",
+  // });
+
+  const { user, setUser } = useUserContext();
   const [editForm, setEditForm] = useState(user);
 
   const handleEdit = () => {
@@ -63,10 +67,10 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white dark:bg-black">
       {/* Header */}
-      <div className="bg-black text-white py-2 px-8">
-        <div className="max-w-4xl mx-auto">
+      <div className="dark:bg-black text-white py-2 px-8 border-b ">
+        <div className="max-w-4xl mx-auto px-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-light tracking-wide">Profile</h1>
@@ -77,7 +81,7 @@ export default function ProfilePage() {
             {!isEditing ? (
               <button
                 onClick={handleEdit}
-                className="flex items-center gap-2 px-4 py-2 border border-white hover:bg-white hover:text-black transition-colors duration-200"
+                className="flex items-center gap-2 px-4 py-2 border border-white hover:bg-white hover:text-black transition-colors duration-200 cursor-pointer"
               >
                 <Edit3 size={18} />
                 Edit Profile
@@ -86,7 +90,7 @@ export default function ProfilePage() {
               <div className="flex gap-2">
                 <button
                   onClick={handleSave}
-                  className="flex items-center gap-2 px-4 py-2 bg-white text-black hover:bg-gray-100 transition-colors duration-200"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-black hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
                 >
                   <Save size={18} />
                   Save
@@ -105,52 +109,48 @@ export default function ProfilePage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto py-12 px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-4xl mx-auto pt-5 px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Avatar Section */}
           <div className="lg:col-span-1">
-            <div className="bg-gray-50 border border-gray-200 p-8 text-center">
-              <div className="relative inline-block mb-6">
-                {user.avatar ? (
+            <div className="dark:bg-black border border-gray-200 p-8 text-center">
+              <div className="relative inline-block mb-6 rounded-full border-2 border-white">
+                {user?.avatar ? (
                   <img
                     src={user.avatar}
                     alt="Profile"
-                    className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
+                    className="w-32 h-32 rounded-full object-cover shadow-lg"
                   />
                 ) : (
-                  <div className="w-32 h-32 bg-black rounded-full flex items-center justify-center">
-                    <User size={48} className="text-white" />
-                  </div>
+                  <Avatar size={"8"} radius="full" fallback="A" />
                 )}
                 <button className="absolute bottom-0 right-0 bg-white border-2 border-black p-2 rounded-full hover:bg-black hover:text-white transition-colors duration-200">
                   <Camera size={16} />
                 </button>
               </div>
-              <h2 className="text-2xl font-light mb-2 ">{user.name}</h2>
+              <h2 className="text-2xl font-light mb-2 ">{user?.name}</h2>
               <div
                 className={`inline-block px-3 py-1 border text-sm font-medium uppercase tracking-wider ${getRoleBadgeStyle(
-                  user.role
+                  user?.role
                 )}`}
               >
-                {user.role}
+                {user?.role}
               </div>
             </div>
 
             {/* Account Stats */}
-            <div className="mt-6 bg-gray-50 border border-gray-200 p-6">
+            <div className="mt-6 dark:bg-black border border-gray-200 p-6">
               <h3 className="text-lg font-light mb-4 border-b border-gray-200 pb-2">
                 Account Details
               </h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 text-sm">User ID</span>
-                  <span className="font-mono text-xs bg-gray-100 px-2 py-1">
-                    {user.id.slice(-8)}
-                  </span>
+                  <span className="font-mono">{user?.id.slice(-8)}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 text-sm">Account Type</span>
-                  <span className="capitalize">{user.role}</span>
+                  <span className="capitalize">{user?.role}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 text-sm">Status</span>
@@ -162,8 +162,8 @@ export default function ProfilePage() {
 
           {/* Profile Information */}
           <div className="lg:col-span-2">
-            <div className="bg-white border border-gray-200">
-              <div className="border-b border-gray-200 px-6 py-4">
+            <div className="bg-white dark:bg-black border border-gray-200 ">
+              <div className="border-b border-gray-200 px-6 py-6">
                 <h3 className="text-xl font-light">Personal Information</h3>
               </div>
 
@@ -177,7 +177,7 @@ export default function ProfilePage() {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editForm.name}
+                      value={editForm?.name}
                       onChange={(e) =>
                         setEditForm({ ...editForm, name: e.target.value })
                       }
@@ -185,7 +185,7 @@ export default function ProfilePage() {
                     />
                   ) : (
                     <div className="px-4 py-3 bg-gray-50 border border-gray-200 text-gray-900">
-                      {user.name}
+                      {user?.name}
                     </div>
                   )}
                 </div>
@@ -199,7 +199,7 @@ export default function ProfilePage() {
                   {isEditing ? (
                     <input
                       type="email"
-                      value={editForm.email}
+                      value={editForm?.email}
                       onChange={(e) =>
                         setEditForm({ ...editForm, email: e.target.value })
                       }
@@ -207,7 +207,7 @@ export default function ProfilePage() {
                     />
                   ) : (
                     <div className="px-4 py-3 bg-gray-50 border border-gray-200 text-gray-900">
-                      {user.email}
+                      {user?.email}
                     </div>
                   )}
                 </div>
@@ -221,7 +221,7 @@ export default function ProfilePage() {
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editForm.username}
+                      value={editForm?.username}
                       onChange={(e) =>
                         setEditForm({ ...editForm, username: e.target.value })
                       }
@@ -229,7 +229,7 @@ export default function ProfilePage() {
                     />
                   ) : (
                     <div className="px-4 py-3 bg-gray-50 border border-gray-200 text-gray-900">
-                      @{user.username}
+                      @{user?.username}
                     </div>
                   )}
                 </div>

@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { CREATE_USER } from "@/lib/gql/mutations";
 import gqlClient from "@/lib/services/graphQL";
-import { PlusIcon } from "lucide-react";
+import { Plus, PlusIcon, UserRoundPlus } from "lucide-react";
 import { useState } from "react";
 import { User } from "../../../generated/prisma";
 import { toast } from "sonner";
@@ -34,12 +34,12 @@ export function AddUserBtn() {
   const [password, setPassword] = useState<string>("");
   const [role, setRole] = useState("staff");
 
-  function clearFields(){
-     setName("")
-     setUsername("")
-     setEmail("")
-     setPassword("")
-     setRole("staff")
+  function clearFields() {
+    setName("");
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setRole("staff");
   }
 
   async function handleAddUser() {
@@ -55,7 +55,7 @@ export function AddUserBtn() {
       });
       if (res?.createdUser?.id) {
         toast("User Created Successfully!");
-        clearFields()
+        clearFields();
       } else {
         toast("User creation aborted!");
       }
@@ -68,12 +68,12 @@ export function AddUserBtn() {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button className="cursor-pointer" variant="outline">
-            {" "}
-            <PlusIcon /> user
+          <Button className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white font-medium rounded cursor-pointer">
+            <UserRoundPlus/>
+            Add User
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] bg-gray-50">
           <DialogHeader>
             <DialogTitle>Add User</DialogTitle>
             <DialogDescription>

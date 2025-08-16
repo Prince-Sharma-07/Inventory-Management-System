@@ -42,9 +42,8 @@ export default function ProfileDropDown() {
     <>
       {!user?.id ? (
         <div className="flex gap-4 items-center font-medium">
-          <Link href={"/login"}>Login</Link>
-          <Button className="font-bold">
-            <Link href={"/signup"} className="font-medium">Register</Link>
+          <Button className="font-bold cursor-pointer">
+            <Link href={"/login"} className="font-medium">Login</Link>
           </Button>
         </div>
       ) : (
@@ -58,15 +57,15 @@ export default function ProfileDropDown() {
               <Card>
                 <Flex gap="3" align="center">
                   <Avatar
-                    size={"3"}
+                    size={"2"}
                     radius="full"
                     fallback={user?.name[0].toUpperCase() || ""}
                   />
                   <Box>
-                    <Text as="div" size="2" weight="bold">
+                    <Text as="div" size="1" weight="bold">
                       {user?.name}
                     </Text>
-                    <Text as="div" size="2" color="gray">
+                    <Text as="div" size="1" color="gray">
                       {user?.role}
                     </Text>
                   </Box>

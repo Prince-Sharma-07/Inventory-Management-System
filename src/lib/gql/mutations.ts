@@ -51,3 +51,9 @@ export const CREATE_SALE = gql`
     createSale(id: $id, quantity: $quantity)
   }
 `;
+
+export const UPDATE_ROLE = gql`
+  mutation UpdateUserRole($userId: String!, $role: String!) {
+    updateUserRole(userId: $userId, role: $role)
+  }
+`;

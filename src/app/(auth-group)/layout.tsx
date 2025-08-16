@@ -8,7 +8,7 @@ export default async function layout({ children }: { children: ReactNode }) {
   const user = await getUserFromCookies();
   // if (!user) redirect("/login");
   return (
-    <div className="">
+    <div className="min-h-screen">
       <UserContextProvider currUser={user}>
         <Header />
         {children}

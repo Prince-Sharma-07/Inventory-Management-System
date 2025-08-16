@@ -41,14 +41,15 @@ export default async function page({ params }: { params: Param }) {
       return obj;
     }) || [];
   return (
-    <div className="w-full h-[85vh] min-h-[85vh] p-6">
+    <div className="w-full h-[85vh] min-h-[85vh] p-6 ">
       <div className="flex justify-between h-[80%] w-full">
         <div className="w-[35%] h-full p-4">
           <div className="relative h-full w-full">
             <Image fill src={product.imageUrl} alt={"product_image"} />
           </div>
         </div>
-        <div className="w-[25%] p-4 flex flex-col gap-4 items-center justify-center">
+        <div className="w-[25%] p-4 flex flex-col gap-4 items-center justify-between">
+          <div className="flex flex-col gap-4 items-center">
           <h1 className="text-4xl font-bold">{product.title}</h1>
           <p className="text-lg">Description: {product.description}</p>
           <span>Price: ${product.price}</span>
@@ -56,9 +57,12 @@ export default async function page({ params }: { params: Param }) {
           <span className="border border-white rounded-2xl w-fit min-w-10 py-0.5 px-3">
             {product.category}
           </span>
+          </div>
+           <SaleProductBtn product={product} />
         </div>
+        
         <div className="flex flex-col gap-4 w-[40%] items-center">
-          <SaleProductBtn product={product} />
+         
           <ProductSaleChart chartData={chartData} />
         </div>
       </div>

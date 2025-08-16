@@ -5,9 +5,12 @@ import { GET_PRODUCTS } from "@/lib/gql/queries";
 import gqlClient from "@/lib/services/graphQL";
 import ProductCard from "../cards/ProductCard";
 import Link from "next/link";
+import { useUserContext } from "@/contexts/UserContextProvider";
+import { AddProductBtn } from "./AddProductBtn";
 
-export default function AllProducts() {
+export default function AllProducts({className} : {className: string}) {
   const [products, setProducts] = useState<Product[]>([]);
+  const {user} = useUserContext()
 
   useEffect(() => {
     async function getProducts() {
@@ -20,9 +23,9 @@ export default function AllProducts() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 py-4 w-full">
-      <h1 className="text-4xl text-center">All Products</h1>
-      <div className="grid grid-cols-3 gap-4">
+    <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:gap-6 w-full py-3 sm:py-4 md:py-5 lg:py-6">
+      <h1 className="flex text-4xl text-center justify-between items-center">Products {user?.role !== "staff" && user  && <AddProductBtn />}</h1>
+      <div className={`${className} gap-6`}>
         {products.map((product) => (
           <Link key={product.id} href={"/product/" + product.id}>
             <ProductCard product={product} />
