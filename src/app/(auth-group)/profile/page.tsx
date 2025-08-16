@@ -13,6 +13,9 @@ import {
 import { Avatar } from "@radix-ui/themes";
 import gqlClient from "@/lib/services/graphQL";
 import { useUserContext } from "@/contexts/UserContextProvider";
+import EditAvatarBtn from "@/components/myUI/EditAvatarBtn";
+import { UPDATE_USER } from "@/lib/gql/mutations";
+import { toast } from "sonner";
 
 interface UserProfile {
   id: string;
@@ -27,32 +30,47 @@ interface UserProfile {
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
-  // const [user, setUser] = useState<UserProfile>({
-  //   id: "507f1f77bcf86cd799439011",
-  //   name: "Sarah Johnson",
-  //   email: "sarah.johnson@company.com",
-  //   username: "sarahj",
-  //   password: "••••••••••",
-  //   avatar: undefined,
-  //   role: "staff",
-  // });
-
   const { user, setUser } = useUserContext();
-  const [editForm, setEditForm] = useState(user);
+  const [name, setName] = useState(user?.name);
+  const [email, setEmail] = useState(user?.email);
+  const [username, setUsername] = useState(user?.username);
+  const [avatar, setAvatar] = useState(user?.avatar);
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditForm(user);
   };
 
-  const handleSave = () => {
-    setUser(editForm);
+  const handleSave = async () => {
+    const updatedUser = {
+      userId: user?.id,
+      name: name,
+      username: username,
+      email: email,
+      avatar: avatar,
+    };
+    try {
+      const res: {
+        updated: boolean;
+      } = await gqlClient.request(UPDATE_USER, updatedUser);
+      if (res?.updated) {
+        toast("profile updated successfully!");
+        
+      } else {
+        toast("Something went wrong!");
+      }
+    } catch (err: any) {
+      console.log("error while updating user", err.message);
+      toast("Something went wrong!");
+    }
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setEditForm(user);
     setIsEditing(false);
+    setUsername(user?.username);
+    setName(user?.name);
+    setEmail(user?.email);
+    setAvatar(user?.avatar);
   };
 
   const getRoleBadgeStyle = (role: string) => {
@@ -67,21 +85,19 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="bg-white dark:bg-black">
+    <div className="">
       {/* Header */}
-      <div className="dark:bg-black text-white py-2 px-8 border-b ">
+      <div className="py-2 px-8 border-b ">
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-light tracking-wide">Profile</h1>
-              <p className="text-gray-300 mt-1">
-                Manage your account information
-              </p>
+              <p className=" mt-1">Manage your account information</p>
             </div>
             {!isEditing ? (
               <button
                 onClick={handleEdit}
-                className="flex items-center gap-2 px-4 py-2 border border-white hover:bg-white hover:text-black transition-colors duration-200 cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2 border border-white hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-colors duration-200 cursor-pointer"
               >
                 <Edit3 size={18} />
                 Edit Profile
@@ -90,14 +106,14 @@ export default function ProfilePage() {
               <div className="flex gap-2">
                 <button
                   onClick={handleSave}
-                  className="flex items-center gap-2 px-4 py-2 bg-white text-black hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+                  className="flex items-center gap-2 px-4 py-2 border-1 border-white bg-white text-black hover:text-white hover:bg-black transition-colors duration-200 cursor-pointer"
                 >
                   <Save size={18} />
                   Save
                 </button>
                 <button
                   onClick={handleCancel}
-                  className="flex items-center gap-2 px-4 py-2 border border-white hover:bg-white hover:text-black transition-colors duration-200"
+                  className="flex cursor-pointer items-center gap-2 px-4 py-2 border-1 border-white bg-white text-black hover:text-white hover:bg-black  transition-colors duration-200"
                 >
                   <X size={18} />
                   Cancel
@@ -115,23 +131,25 @@ export default function ProfilePage() {
           <div className="lg:col-span-1">
             <div className="dark:bg-black border border-gray-200 p-8 text-center">
               <div className="relative inline-block mb-6 rounded-full border-2 border-white">
-                {user?.avatar ? (
+                {avatar ? (
                   <img
-                    src={user.avatar}
+                    src={avatar}
                     alt="Profile"
                     className="w-32 h-32 rounded-full object-cover shadow-lg"
                   />
                 ) : (
-                  <Avatar size={"8"} radius="full" fallback="A" />
+                  <Avatar
+                    size={"8"}
+                    radius="full"
+                    fallback={user?.name[0].toUpperCase() || ""}
+                  />
                 )}
-                <button className="absolute bottom-0 right-0 bg-white border-2 border-black p-2 rounded-full hover:bg-black hover:text-white transition-colors duration-200">
-                  <Camera size={16} />
-                </button>
+                <EditAvatarBtn avatar={avatar} setAvatar={setAvatar} />
               </div>
               <h2 className="text-2xl font-light mb-2 ">{user?.name}</h2>
               <div
                 className={`inline-block px-3 py-1 border text-sm font-medium uppercase tracking-wider ${getRoleBadgeStyle(
-                  user?.role
+                  user?.role || ""
                 )}`}
               >
                 {user?.role}
@@ -170,102 +188,80 @@ export default function ProfilePage() {
               <div className="p-6 space-y-6">
                 {/* Full Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <User size={16} className="inline mr-2" />
                     Full Name
                   </label>
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editForm?.name}
-                      onChange={(e) =>
-                        setEditForm({ ...editForm, name: e.target.value })
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full px-4 py-3 border bg-gray-100 text-gray-950 border-gray-300 focus:border-black focus:outline-none transition-colors"
                     />
                   ) : (
-                    <div className="px-4 py-3 bg-gray-50 border border-gray-200 text-gray-900">
-                      {user?.name}
+                    <div className="px-4 py-3 border border-gray-200">
+                      {name}
                     </div>
                   )}
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Mail size={16} className="inline mr-2" />
                     Email Address
                   </label>
                   {isEditing ? (
                     <input
                       type="email"
-                      value={editForm?.email}
-                      onChange={(e) =>
-                        setEditForm({ ...editForm, email: e.target.value })
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full px-4 bg-gray-100 text-gray-950 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
                     />
                   ) : (
-                    <div className="px-4 py-3 bg-gray-50 border border-gray-200 text-gray-900">
-                      {user?.email}
+                    <div className="px-4 py-3 border border-gray-200">
+                      {email}
                     </div>
                   )}
                 </div>
 
                 {/* Username */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <AtSign size={16} className="inline mr-2" />
                     Username
                   </label>
                   {isEditing ? (
                     <input
                       type="text"
-                      value={editForm?.username}
-                      onChange={(e) =>
-                        setEditForm({ ...editForm, username: e.target.value })
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      className="w-full px-4 bg-gray-100 text-gray-950 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
                     />
                   ) : (
-                    <div className="px-4 py-3 bg-gray-50 border border-gray-200 text-gray-900">
-                      @{user?.username}
+                    <div className="px-4 py-3 border border-gray-200 ">
+                      @{username}
                     </div>
                   )}
                 </div>
 
                 {/* Role */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     <Shield size={16} className="inline mr-2" />
                     Role
                   </label>
-                  {isEditing ? (
-                    <select
-                      value={editForm.role}
-                      onChange={(e) =>
-                        setEditForm({
-                          ...editForm,
-                          role: e.target.value as any,
-                        })
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
+
+                  <div className="px-4 py-3 border border-gray-200">
+                    <span
+                      className={`inline-block px-2 py-1 text-xs font-medium uppercase tracking-wider border ${getRoleBadgeStyle(
+                        user?.role || ""
+                      )}`}
                     >
-                      <option value="staff">Staff</option>
-                      <option value="admin">Admin</option>
-                      <option value="user">User</option>
-                    </select>
-                  ) : (
-                    <div className="px-4 py-3 bg-gray-50 border border-gray-200">
-                      <span
-                        className={`inline-block px-2 py-1 text-xs font-medium uppercase tracking-wider border ${getRoleBadgeStyle(
-                          user.role
-                        )}`}
-                      >
-                        {user.role}
-                      </span>
-                    </div>
-                  )}
+                      {user?.role}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

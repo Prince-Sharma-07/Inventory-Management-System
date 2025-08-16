@@ -57,3 +57,27 @@ export const UPDATE_ROLE = gql`
     updateUserRole(userId: $userId, role: $role)
   }
 `;
+
+export const DELETE_USER = gql`
+  mutation UpdateUserRole($id: String!) {
+    deleted: deleteUser(id: $id)
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUserRole(
+    $userId: String!
+    $name: String!
+    $email: String!
+    $username: String!
+    $avatar: String
+  ) {
+    updated : updateUserProfile(
+      userId: $userId
+      name: $name
+      email: $email
+      username: $username
+      avatar: $avatar
+    )
+  }
+`;

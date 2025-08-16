@@ -145,3 +145,23 @@ export async function logoutUser() {
     return false;
   }
 }
+
+export async function deleteUser(
+  _: any,
+  args: {
+    id: string;
+  }
+) {
+  try {
+    const res = await prismaClient.user.delete({
+      where: {
+        id: args.id,
+      },
+    });
+    if (res.id) return true;
+    return false;
+  } catch (err: any) {
+    console.log(err.message);
+    return false;
+  }
+}

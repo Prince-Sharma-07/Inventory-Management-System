@@ -27,7 +27,9 @@ import { useState } from "react";
 import { User } from "../../../generated/prisma";
 import { toast } from "sonner";
 
-export function AddUserBtn() {
+export function AddUserBtn({setUsers} : {
+  setUsers : React.Dispatch<React.SetStateAction<User[]>>
+}) {
   const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -55,6 +57,7 @@ export function AddUserBtn() {
       });
       if (res?.createdUser?.id) {
         toast("User Created Successfully!");
+        setUsers(prev=>[...prev , res.createdUser])
         clearFields();
       } else {
         toast("User creation aborted!");
@@ -70,7 +73,7 @@ export function AddUserBtn() {
         <DialogTrigger asChild>
           <Button className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white font-medium rounded cursor-pointer">
             <UserRoundPlus/>
-            Add User
+            User
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px] bg-gray-50">

@@ -32,11 +32,6 @@ export function EditRoleBtn({
           userId,
           role: currRole,
         });
-        if (res?.updateUserRole) {
-          toast("Role updated successfully!");
-        } else {
-          toast("something went wrong!");
-        }
       } catch (err: any) {
         console.log(err.message);
         toast("something went wrong!");
@@ -50,7 +45,7 @@ export function EditRoleBtn({
       onValueChange={(val) => setCurrRole(val as RoleType)}
     >
       <SelectTrigger className="border-none outline-none">
-        <EditIcon className="cursor-pointer" />
+        <EditIcon className="cursor-pointer hover:text-gray-400" />
       </SelectTrigger>
       <SelectContent className="font-medium">
         <SelectGroup>

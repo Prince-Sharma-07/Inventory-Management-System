@@ -35,6 +35,7 @@ const typeDefs = gql`
       stock: Int!
       imageUrl: String!
     ): Product
+    deleteUser(id : String!) : Boolean
   }
 
   type Product {

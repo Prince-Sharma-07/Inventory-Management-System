@@ -10,6 +10,7 @@ import {
 } from "./resolvers/products";
 import {
   createUser,
+  deleteUser,
   getAllUsers,
   loginUser,
   logoutUser,
@@ -33,6 +34,7 @@ const resolvers = {
     updateUserProfile,
     addProduct,
     createSale,
+    deleteUser
   },
 };
 

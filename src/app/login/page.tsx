@@ -50,7 +50,7 @@ export default function Login() {
   }
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm dark:bg-black">
         <CardHeader>
           <div className="w-full flex items-center gap-5 justify-between">
             <div className="flex flex-col gap-2">
