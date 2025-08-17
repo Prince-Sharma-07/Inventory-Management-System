@@ -26,6 +26,7 @@ export default function Login() {
   const [error, setError] = useState<{
     message?: string;
   }>({});
+  const router = useRouter()
 
   async function handleLogin() {
     setLoading(true);
@@ -38,7 +39,10 @@ export default function Login() {
         toast("User Logged in Successfully! redirecting..."); 
         setUserCred("")
         setPassword("")
-        setTimeout(()=>window.location.href = "/" , 1000); 
+        setTimeout(()=>{
+          router.push('/')
+          router.refresh();
+        }, 1000); 
       } else {
         setError({ message: "Invalid Credentials" });
         toast("Invalid Credentials");
