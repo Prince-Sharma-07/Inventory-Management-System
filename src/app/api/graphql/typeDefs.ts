@@ -7,11 +7,12 @@ const typeDefs = gql`
     currentUser: User
     getAllUsers: [User]
     getAllProducts: [Product]
-    getProductById(id : String!): Product
+    getProductById(id: String!): Product
+    getSales : [Sale]
   }
 
   type Mutation {
-    createSale(id : String! , quantity : Int!) : Boolean
+    createSale(id: String!, quantity: Int!): Boolean
     createUser(
       name: String!
       email: String!
@@ -35,7 +36,18 @@ const typeDefs = gql`
       stock: Int!
       imageUrl: String!
     ): Product
-    deleteUser(id : String!) : Boolean
+    updateProduct(
+      id: String!
+      title: String!
+      description: String!
+      imageUrl: String!
+      category: String!
+      price: Float!
+      stock: Int!
+    ): Boolean
+    updateAvatar(id : String! , avatar: String!) : Boolean
+    deleteUser(id: String!): Boolean
+    deleteProduct(id: String!): Boolean
   }
 
   type Product {
@@ -57,11 +69,11 @@ const typeDefs = gql`
     avatar: String
     role: String
   }
-  
+
   type Sale {
-    id : String
-   productId: String
-   quantity: Int
+    id: String
+    productId: String
+    quantity: Int
     createdAt: String
   }
 `;

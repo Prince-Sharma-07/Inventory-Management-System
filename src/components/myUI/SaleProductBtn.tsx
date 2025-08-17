@@ -17,6 +17,7 @@ import gqlClient from "@/lib/services/graphQL";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Product } from "../../../generated/prisma";
+import { CreditCard, ShoppingCart, ShoppingCartIcon } from "lucide-react";
 
 export function SaleProductBtn({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(0);
@@ -34,7 +35,7 @@ export function SaleProductBtn({ product }: { product: Product }) {
       const res: {
         createSale: boolean;
       } = await gqlClient.request(CREATE_SALE, {
-        id : product.id,
+        id: product.id,
         quantity,
       });
       if (res?.createSale) {
@@ -53,9 +54,9 @@ export function SaleProductBtn({ product }: { product: Product }) {
       <Dialog>
         <form>
           <DialogTrigger asChild>
-            <Button className="cursor-pointer" variant="outline">
+            <Button className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white font-medium rounded cursor-pointer">
               {" "}
-              Sale Product
+              <ShoppingCartIcon />Create Sale
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">

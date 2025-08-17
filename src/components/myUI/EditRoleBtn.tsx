@@ -49,7 +49,7 @@ export function EditRoleBtn({
       </SelectTrigger>
       <SelectContent className="font-medium">
         <SelectGroup>
-          <SelectLabel>Roles</SelectLabel>
+          <SelectLabel>Edit Role</SelectLabel>
           <SelectItem value="manager">Manager</SelectItem>
           <SelectItem value="staff">Staff</SelectItem>
         </SelectGroup>

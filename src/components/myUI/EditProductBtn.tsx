@@ -20,35 +20,43 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CREATE_PRODUCT } from "@/lib/gql/mutations";
+import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@/lib/gql/mutations";
 import gqlClient from "@/lib/services/graphQL";
-import { ChevronDownIcon, PackagePlus } from "lucide-react";
+import { ChevronDownIcon, Edit } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Product } from "../../../generated/prisma";
+import { Product, ProductCategory } from "../../../generated/prisma";
+import { ProductWithSales } from "@/types";
 
-export function AddProductBtn() {
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [category, setCategory] = useState<string>("others");
-  const [price, setPrice] = useState<number>(0);
-  const [stock, setStock] = useState<number>(0);
+export function EditProductBtn({
+  product,
+  setProduct,
+}: {
+  product: ProductWithSales;
+  setProduct: React.Dispatch<React.SetStateAction<ProductWithSales | null>>;
+}) {
+  const [title, setTitle] = useState(product?.title);
+  const [description, setDescription] = useState(product?.description);
+  const [imageUrl, setImageUrl] = useState(product?.imageUrl);
+  const [category, setCategory] = useState(product?.category);
+  const [price, setPrice] = useState(product?.price);
+  const [stock, setStock] = useState(product?.stock);
 
   function clearFields() {
-    setTitle("");
-    setDescription("");
-    setCategory("others");
-    setPrice(0);
-    setStock(0);
-    setImageUrl("");
+    setTitle(product.title);
+    setDescription(product.description);
+    setCategory(product.category);
+    setPrice(product.price);
+    setStock(product.stock);
+    setImageUrl(product.imageUrl);
   }
 
   async function handleAddProduct() {
     try {
       const res: {
-        createdProduct: Product;
-      } = await gqlClient.request(CREATE_PRODUCT, {
+        updated: Product;
+      } = await gqlClient.request(UPDATE_PRODUCT, {
+        id: product.id,
         title,
         description,
         imageUrl,
@@ -56,11 +64,21 @@ export function AddProductBtn() {
         price,
         stock,
       });
-      if (res?.createdProduct) {
-        toast("Product Created Successfully!");
+      if (res?.updated) {
+        toast("Product Updated Successfully!");
+        setProduct({
+        id: product.id,
+        title,
+        description,
+        imageUrl,
+        category,
+        price,
+        stock,
+        sales : product.sales
+      })
         clearFields();
       } else {
-        toast("Product creation terminated!");
+        toast("Product Updation Terminated!");
       }
     } catch (err: any) {
       console.log(err.message);
@@ -73,14 +91,14 @@ export function AddProductBtn() {
         <DialogTrigger asChild>
           <Button className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white font-medium rounded cursor-pointer">
             {" "}
-            <PackagePlus /> Product
+            <Edit /> Edit
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add Product</DialogTitle>
+            <DialogTitle>Edit Product</DialogTitle>
             <DialogDescription>
-              Add details of the new product. Click save when you&apos;re done.
+              Edit details of the product. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
@@ -141,10 +159,13 @@ export function AddProductBtn() {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="category-1">Select Category</Label>
-              <Select value={category} onValueChange={setCategory}>
+              <Select
+                value={category}
+                onValueChange={(val: ProductCategory) => setCategory(val)}
+              >
                 <SelectTrigger
                   id="category-1"
-                  className="w-full border shadow rounded-md text-start px-3 p-1 flex justify-between items-center"
+                  className="w-full border shadow rounded-md text-start px-3 p-1 flex "
                 >
                   <div className="flex gap-2 justify-between items-center w-full">
                     <SelectValue placeholder="Select a category" />

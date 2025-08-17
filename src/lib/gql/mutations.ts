@@ -72,12 +72,46 @@ export const UPDATE_USER = gql`
     $username: String!
     $avatar: String
   ) {
-    updated : updateUserProfile(
+    updated: updateUserProfile(
       userId: $userId
       name: $name
       email: $email
       username: $username
       avatar: $avatar
     )
+  }
+`;
+
+export const UPDATE_PRODUCT = gql`
+  mutation UpdateProductDetails(
+    $id: String!
+    $title: String!
+    $description: String!
+    $imageUrl: String!
+    $category: String!
+    $price: Float!
+    $stock: Int!
+  ) {
+    updated: updateProduct(
+      id: $id
+      title: $title
+      description: $description
+      imageUrl: $imageUrl
+      category: $category
+      price: $price
+      stock: $stock
+    )
+  }
+`;
+
+export const DELETE_PRODUCT = gql`
+  mutation UpdateUserRole($id: String!) {
+    deleted: deleteProduct(id: $id)
+  }
+`;
+
+export const UPDATE_AVATAR = gql`
+  mutation UpdateAvatar($id: String!, $avatar: String!) {
+    updated:updateAvatar(id: $id, avatar: $avatar)
   }
 `;

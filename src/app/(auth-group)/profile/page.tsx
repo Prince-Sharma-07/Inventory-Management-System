@@ -52,9 +52,9 @@ export default function ProfilePage() {
       const res: {
         updated: boolean;
       } = await gqlClient.request(UPDATE_USER, updatedUser);
+      console.log(res)
       if (res?.updated) {
         toast("profile updated successfully!");
-        
       } else {
         toast("Something went wrong!");
       }
@@ -85,19 +85,19 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="">
+    <div className="w-full pb-6">
       {/* Header */}
-      <div className="py-2 px-8 border-b ">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-light tracking-wide">Profile</h1>
-              <p className=" mt-1">Manage your account information</p>
+      <div className="py-2 px-8 border-b w-full justify-center flex">
+        <div className="max-w-212  flex justify-between w-full">
+          <div className="w-full flex items-center">
+            <div className="w-full justify-center items-center">
+              <h1 className="text-2xl md:text-3xl font-light tracking-wide">Profile</h1>
+              <p className=" mt-1 max-md:hidden">Manage your account information</p>
             </div>
             {!isEditing ? (
               <button
                 onClick={handleEdit}
-                className="flex items-center gap-2 px-4 py-2 border border-white hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-colors duration-200 cursor-pointer"
+                className="flex rounded-md text-nowrap items-center gap-2 md:gap-3 px-2 py-1 lg:px-4 lg:py-2 border-2 border-black hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-colors duration-200 cursor-pointer"
               >
                 <Edit3 size={18} />
                 Edit Profile
@@ -106,14 +106,14 @@ export default function ProfilePage() {
               <div className="flex gap-2">
                 <button
                   onClick={handleSave}
-                  className="flex items-center gap-2 px-4 py-2 border-1 border-white bg-white text-black hover:text-white hover:bg-black transition-colors duration-200 cursor-pointer"
+                  className="flex rounded-md items-center gap-2 px-4 py-2 border-1 border-white bg-white text-black hover:text-white hover:bg-black transition-colors duration-200 cursor-pointer"
                 >
                   <Save size={18} />
                   Save
                 </button>
                 <button
                   onClick={handleCancel}
-                  className="flex cursor-pointer items-center gap-2 px-4 py-2 border-1 border-white bg-white text-black hover:text-white hover:bg-black  transition-colors duration-200"
+                  className="flex rounded-md cursor-pointer items-center gap-2 px-4 py-2 border-1 border-white bg-white text-black hover:text-white hover:bg-black  transition-colors duration-200"
                 >
                   <X size={18} />
                   Cancel
@@ -129,7 +129,7 @@ export default function ProfilePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Avatar Section */}
           <div className="lg:col-span-1">
-            <div className="dark:bg-black border border-gray-200 p-8 text-center">
+            <div className="dark:bg-black border rounded-md border-gray-200 p-8 text-center">
               <div className="relative inline-block mb-6 rounded-full border-2 border-white">
                 {avatar ? (
                   <img
@@ -144,7 +144,7 @@ export default function ProfilePage() {
                     fallback={user?.name[0].toUpperCase() || ""}
                   />
                 )}
-                <EditAvatarBtn avatar={avatar} setAvatar={setAvatar} />
+                <EditAvatarBtn avatar={avatar} setAvatar={setAvatar} id={user?.id || ""}/>
               </div>
               <h2 className="text-2xl font-light mb-2 ">{user?.name}</h2>
               <div
@@ -157,8 +157,8 @@ export default function ProfilePage() {
             </div>
 
             {/* Account Stats */}
-            <div className="mt-6 dark:bg-black border border-gray-200 p-6">
-              <h3 className="text-lg font-light mb-4 border-b border-gray-200 pb-2">
+            <div className="mt-6 dark:bg-black border border-gray-200 p-6 rounded-md">
+              <h3 className="text-lg font-light mb-4 border-b border-gray-200 pb-2 ">
                 Account Details
               </h3>
               <div className="space-y-3">
@@ -180,7 +180,7 @@ export default function ProfilePage() {
 
           {/* Profile Information */}
           <div className="lg:col-span-2">
-            <div className="bg-white dark:bg-black border border-gray-200 ">
+            <div className="bg-white dark:bg-black border border-gray-200 rounded-md">
               <div className="border-b border-gray-200 px-6 py-6">
                 <h3 className="text-xl font-light">Personal Information</h3>
               </div>
@@ -197,10 +197,10 @@ export default function ProfilePage() {
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-3 border bg-gray-100 text-gray-950 border-gray-300 focus:border-black focus:outline-none transition-colors"
+                      className="w-full rounded-md px-4 py-3 border bg-gray-100 text-gray-950 border-gray-300 focus:border-black focus:outline-none transition-colors"
                     />
                   ) : (
-                    <div className="px-4 py-3 border border-gray-200">
+                    <div className="px-4 rounded-md py-3 border border-gray-200">
                       {name}
                     </div>
                   )}
@@ -217,10 +217,10 @@ export default function ProfilePage() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 bg-gray-100 text-gray-950 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
+                      className="w-full px-4 rounded-md bg-gray-100 text-gray-950 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
                     />
                   ) : (
-                    <div className="px-4 py-3 border border-gray-200">
+                    <div className="px-4 py-3 rounded-md border border-gray-200">
                       {email}
                     </div>
                   )}
@@ -237,10 +237,10 @@ export default function ProfilePage() {
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      className="w-full px-4 bg-gray-100 text-gray-950 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
+                      className="w-full px-4 rounded-md bg-gray-100 text-gray-950 py-3 border border-gray-300 focus:border-black focus:outline-none transition-colors"
                     />
                   ) : (
-                    <div className="px-4 py-3 border border-gray-200 ">
+                    <div className="px-4 py-3 rounded-md border border-gray-200 ">
                       @{username}
                     </div>
                   )}
@@ -253,7 +253,7 @@ export default function ProfilePage() {
                     Role
                   </label>
 
-                  <div className="px-4 py-3 border border-gray-200">
+                  <div className="px-4 py-3 border rounded-md border-gray-200">
                     <span
                       className={`inline-block px-2 py-1 text-xs font-medium uppercase tracking-wider border ${getRoleBadgeStyle(
                         user?.role || ""

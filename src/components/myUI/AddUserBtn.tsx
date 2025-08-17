@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { CREATE_USER } from "@/lib/gql/mutations";
 import gqlClient from "@/lib/services/graphQL";
-import { Plus, PlusIcon, UserRoundPlus } from "lucide-react";
+import { ChevronDownIcon, Plus, PlusIcon, UserRoundPlus } from "lucide-react";
 import { useState } from "react";
 import { User } from "../../../generated/prisma";
 import { toast } from "sonner";
@@ -131,8 +131,14 @@ export function AddUserBtn({setUsers} : {
             <div className="grid gap-3">
               <Label htmlFor="role-1">Select Role</Label>
               <Select value={role} onValueChange={setRole}>
-                <SelectTrigger id="role-1" className="w-full">
-                  <SelectValue placeholder="Select a Role" />
+                <SelectTrigger
+                  id="role-1"
+                  className="w-full border shadow rounded-md text-start px-3 p-1 flex "
+                >
+                  <div className="flex gap-2 justify-between items-center w-full">
+                    <SelectValue placeholder="Select a Role" />
+                    <ChevronDownIcon className="h-6 w-6" />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>

@@ -131,7 +131,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="h-16 flex backdrop-blur-xl bg-white/90 dark:bg-black/90 justify-between px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-3 items-center sticky top-0 border-b border-gray-200/50 dark:border-gray-700/50 z-50 transition-all duration-200">
+      <header className="h-16 flex backdrop-blur-xl bg-white/90 dark:bg-black/90 justify-between px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-3 items-center sticky top-0 border-b border-gray-200/50 dark:border-gray-700/50 z-50 transition-all duration-200 shadow-sm">
         {/* Logo Section */}
         <div className="flex items-center">
           <Link 
@@ -159,15 +159,15 @@ export default function Header() {
         {/* Navigation Actions */}
         <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
           {/* Search Button - Now visible on all screen sizes */}
-          <button 
+          {/* <button 
             onClick={handleSearchToggle}
             className="flex items-center justify-center w-9 h-9 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200"
           >
             <Search className="w-5 h-5 opacity-70" />
-          </button>
+          </button> */}
 
           {/* Divider */}
-          <div className="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+          {/* <div className="w-px h-6 bg-gray-200 dark:bg-gray-700"></div> */}
 
           {/* Theme Toggle */}
           <div className="flex items-center justify-center">

@@ -104,7 +104,7 @@ export async function updateUserProfile(
     if (currUser?.role != "admin" && currUser?.id != args.userId) return false;
     const dataToSave = {
       name: args.name,
-      username: args.name,
+      username: args.username,
       email: args.email,
       avatar: args.avatar,
     };
@@ -162,6 +162,29 @@ export async function deleteUser(
     return false;
   } catch (err: any) {
     console.log(err.message);
+    return false;
+  }
+}
+
+export async function updateAvatar(
+  _: any,
+  args: {
+    id: string;
+    avatar: string;
+  }
+) {
+  try {
+    const res = await prismaClient.user.update({
+      where: {
+        id: args.id,
+      },
+      data: {
+        avatar: args.avatar,
+      },
+    });
+    if (res.id) return true;
+  } catch (err: any) {
+    console.log("err while updating avatar ," , err.message);
     return false;
   }
 }

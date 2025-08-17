@@ -58,3 +58,14 @@ export const LOGOUT = gql`
     logoutUser
   }
 `;
+
+export const GET_SALES = gql`
+  query GetSales {
+   sales:getSales {
+      createdAt
+      id
+      productId
+      quantity
+    }
+  }
+`;

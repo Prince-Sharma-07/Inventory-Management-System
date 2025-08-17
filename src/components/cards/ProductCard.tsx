@@ -33,7 +33,7 @@ import Image from "next/image";
 import { Product } from "../../../generated/prisma";
 import Link from "next/link";
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({ product } : { product: Product }) {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -43,25 +43,31 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   return (
-    
     <div className="flex h-16 sm:h-17 md:h-18 lg:h-19 xl:h-20 shadow-card dark:bg-gray-950 w-full rounded-md">
       <div className="flex h-full justify-between items-center w-full">
-        <Image 
+        <Image
           src={product.imageUrl}
           alt={product.title}
           width={106}
           height={100}
           className="object-contain h-full rounded-l-md"
-        />   
-      <div className="flex gap-3 p-4 justify-between items-center w-full">
-        
-        <div className="flex flex-col gap-2 justify-between">
-          <span className="text-sm lg:text-lg xl:text-xl">{product.title}</span>
-          <span className="font-medium">{formatPrice(product.price)}</span>
+        />
+        <div className="flex gap-3 p-4 justify-between items-center w-full">
+          <div className="flex flex-col gap-2 justify-between">
+            <span className="text-sm lg:text-lg line-clamp-1 w-full">
+              {product.title}
+            </span>
+            <span className="font-medium text-sm xl:text-md">
+              {formatPrice(product.price)}
+            </span>
+          </div>
+          <Link
+            href={"/product/" + product.id}
+            className="hover:text-blue-600 text-nowrap text-sm lg:text-md"
+          >
+            View Detail
+          </Link>
         </div>
-        <Link href={"/product/" + product.id} className="hover:text-blue-600 text-nowrap text-sm lg:text-lg xl:text-xl">View Detail</Link>
-      </div>
-      
       </div>
     </div>
   );

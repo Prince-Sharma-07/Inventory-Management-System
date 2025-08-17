@@ -1,16 +1,16 @@
 "use client";
 import { Avatar, Box, Card, Flex, Text } from "@radix-ui/themes";
 import { User } from "../../../generated/prisma";
-import { EditRoleBtn } from "./EditRoleBtn";
+import { EditRoleBtn } from "../myUI/EditRoleBtn";
 import { useState } from "react";
-import DeleteUserBtn from "./DeleteUserBtn";
+import DeleteUserBtn from "../myUI/DeleteUserBtn";
 
 export default function UserCard({
   user,
   setUsers,
 }: {
   user: User;
-  setUsers: React.Dispatch<React.SetStateAction<User[]>>
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
 }) {
   const [currRole, setCurrRole] = useState(user?.role);
   return (

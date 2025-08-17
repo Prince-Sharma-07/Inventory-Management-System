@@ -37,6 +37,7 @@ function SelectTrigger({
       className={className}
     >
       {children}
+     
     </SelectPrimitive.Trigger>
   )
 }

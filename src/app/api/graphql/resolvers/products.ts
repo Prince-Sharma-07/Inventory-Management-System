@@ -90,3 +90,72 @@ export async function createSale(
     return false;
   }
 }
+
+export async function deleteProduct(
+  _: any,
+  args: {
+    id: string;
+  }
+) {
+  try {
+    const res = await prismaClient.product.delete({
+      where: {
+        id: args.id,
+      },
+    });
+    if (res.id) return true;
+    return false;
+  } catch (err: any) {
+    console.log(err.message);
+    return false;
+  }
+}
+
+export async function updateProduct(
+  _: any,
+  args: {
+    id: string;
+    title: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    stock: number;
+    category: ProductCategory;
+  }
+) {
+  const dataToUpdate = {
+    title: args.title,
+    description: args.description,
+    imageUrl: args.imageUrl,
+    price: args.price,
+    stock: args.stock,
+    category: args.category,
+  };
+  try {
+    const res = await prismaClient.product.update({
+      where: {
+        id: args.id,
+      },
+      data: dataToUpdate,
+    });
+    if (res?.id) return true;
+    else return false;
+  } catch (err: any) {
+    console.log("error on server while updating product", err.message);
+    return false;
+  }
+}
+
+export async function getSales() {
+  try {
+    const sales = await prismaClient.sale.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+    return sales;
+  } catch (err: any) {
+    console.log("err on server while fetching sales data, ", err.message);
+    return [];
+  }
+}

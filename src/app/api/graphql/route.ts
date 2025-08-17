@@ -5,8 +5,11 @@ import { NextRequest } from "next/server";
 import {
   addProduct,
   createSale,
+  deleteProduct,
   getAllProducts,
   getProductById,
+  getSales,
+  updateProduct,
 } from "./resolvers/products";
 import {
   createUser,
@@ -14,8 +17,9 @@ import {
   getAllUsers,
   loginUser,
   logoutUser,
+  updateAvatar,
   updateUserProfile,
-  updateUserRole,
+  updateUserRole
 } from "./resolvers/user";
 import typeDefs from "./typeDefs";
 
@@ -27,6 +31,7 @@ const resolvers = {
     getAllUsers,
     getAllProducts,
     getProductById,
+    getSales,
   },
   Mutation: {
     createUser,
@@ -34,7 +39,10 @@ const resolvers = {
     updateUserProfile,
     addProduct,
     createSale,
-    deleteUser
+    deleteUser,
+    deleteProduct,
+    updateProduct,
+    updateAvatar
   },
 };
 

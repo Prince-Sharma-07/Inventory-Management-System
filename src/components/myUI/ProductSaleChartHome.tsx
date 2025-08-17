@@ -71,21 +71,20 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function ProductSaleChart({
+export default function ProductSaleChartHome({
   chartData,
 }: {
   chartData: { date: string; quantity: number }[];
 }) {
-
   const myMap = new Map();
-  chartData?.forEach(({date, quantity}) => {
-    if(!myMap.has(date)) {
-      myMap.set(date, {date, quantity : 0})
+  chartData?.forEach(({ date, quantity }) => {
+    if (!myMap.has(date)) {
+      myMap.set(date, { date, quantity: 0 });
     }
     myMap.get(date).quantity += quantity;
-  })
+  });
 
-  const mergeredChartData = Array.from(myMap.values())
+  const mergeredChartData = Array.from(myMap.values());
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -105,37 +104,11 @@ export default function ProductSaleChart({
 
   // Handle empty data
   if (!chartData || chartData.length === 0) {
-    return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-gray-400 dark:text-gray-600 mb-2">
-            <svg
-              className="w-12 h-12 mx-auto"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1}
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-              />
-            </svg>
-          </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-            No sales data available
-          </p>
-          <p className="text-xs text-gray-400 dark:text-gray-600 mt-1">
-            Sales data will appear here once recorded
-          </p>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-90">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={mergeredChartData}
@@ -146,13 +119,13 @@ export default function ProductSaleChart({
             bottom: 20,
           }}
         >
-          <CartesianGrid 
-            strokeDasharray="3 3" 
-            stroke="#e5e7eb" 
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="#e5e7eb"
             className="dark:stroke-gray-600"
           />
-          <XAxis 
-            dataKey="date" 
+          <XAxis
+            dataKey="date"
             tick={{ fontSize: 12 }}
             stroke="#6b7280"
             className="dark:stroke-gray-400"
@@ -160,32 +133,29 @@ export default function ProductSaleChart({
             height={60}
             interval="preserveStartEnd"
           />
-          <YAxis 
+          <YAxis
             tick={{ fontSize: 12 }}
             stroke="#6b7280"
             className="dark:stroke-gray-400"
             width={40}
           />
           <Tooltip content={<CustomTooltip />} />
-          <Legend 
-            wrapperStyle={{ fontSize: '14px' }}
-            iconType="line"
-          />
+          <Legend wrapperStyle={{ fontSize: "14px" }} iconType="line" />
           <Line
             type="monotone"
             dataKey="quantity"
             stroke="#3b82f6"
             strokeWidth={2}
-            dot={{ 
-              fill: '#3b82f6', 
-              strokeWidth: 2, 
-              r: 4 
+            dot={{
+              fill: "#3b82f6",
+              strokeWidth: 2,
+              r: 4,
             }}
-            activeDot={{ 
-              r: 6, 
-              fill: '#1d4ed8',
-              stroke: '#ffffff',
-              strokeWidth: 2
+            activeDot={{
+              r: 6,
+              fill: "#1d4ed8",
+              stroke: "#ffffff",
+              strokeWidth: 2,
             }}
             name="Sales Quantity"
           />

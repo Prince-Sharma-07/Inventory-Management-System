@@ -13,15 +13,33 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import gqlClient from "@/lib/services/graphQL";
+import { toast } from "sonner";
+import { UPDATE_AVATAR } from "@/lib/gql/mutations";
 
 export default function EditAvatarBtn({
+  id,
   avatar,
   setAvatar,
 }: {
+  id: string;
   avatar: string | undefined | null;
   setAvatar: (val: string) => void;
 }) {
-  function handleEditAvatar() {}
+  async function handleEditAvatar() {
+    try {
+      const res: {
+        updated: boolean;
+      } = await gqlClient.request(UPDATE_AVATAR, { id, avatar });
+      if (res?.updated) {
+        toast("Avatar updated successfully!");
+      } else {
+        toast("Something went wrong!");
+      }
+    } catch (err: any) {
+      console.log("Error while updating user profile", err.message);
+    }
+  }
   return (
     <div>
       <Dialog>
