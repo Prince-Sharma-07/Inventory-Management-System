@@ -34,9 +34,10 @@ export default function Login() {
       const res: {
         loginUser: boolean;
       } = await gqlClient.request(LOGIN, { userCred, password });
-      console.log(res);
       if (res?.loginUser) {
         toast("User Logged in Successfully! redirecting..."); 
+        setUserCred("")
+        setPassword("")
         setTimeout(()=>window.location.href = "/" , 1000); 
       } else {
         setError({ message: "Invalid Credentials" });

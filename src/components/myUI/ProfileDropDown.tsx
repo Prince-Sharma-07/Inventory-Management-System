@@ -131,7 +131,7 @@ import { toast } from "sonner";
 
 export default function ProfileDropDown() {
   const { user, setUser } = useUserContext();
-
+  console.log("This is our user in profile drop down:" ,user)
   async function handleLogout() {
     try {
       const res: {
