@@ -97,7 +97,7 @@ export default function ProfilePage() {
             {!isEditing ? (
               <button
                 onClick={handleEdit}
-                className="flex rounded-md text-nowrap items-center gap-2 md:gap-3 px-2 py-1 lg:px-4 lg:py-2 border-2 border-black hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-colors duration-200 cursor-pointer"
+                className="flex rounded-md text-nowrap items-center gap-2 md:gap-3 px-2 py-1 lg:px-4 lg:py-2 border-2 border- hover:text-white hover:bg-black dark:hover:bg-white dark:hover:text-black transition-colors duration-200 cursor-pointer"
               >
                 <Edit3 size={18} />
                 Edit Profile

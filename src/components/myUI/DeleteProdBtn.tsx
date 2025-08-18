@@ -12,6 +12,7 @@ export default function ({ id }: { id: string }) {
       const res : {
         deleted : boolean
       } = await gqlClient.request(DELETE_PRODUCT, { id });
+     
       if(res?.deleted) {
         toast("Product deleted successfully!")
       }

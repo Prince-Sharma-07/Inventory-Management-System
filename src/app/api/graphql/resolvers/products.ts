@@ -106,7 +106,7 @@ export async function deleteProduct(
     if (res.id) return true;
     return false;
   } catch (err: any) {
-    console.log(err.message);
+    console.log("err on server while deleting product",err.message);
     return false;
   }
 }

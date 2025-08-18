@@ -235,7 +235,7 @@ export default function Page({ params }: { params: Param }) {
                   fill
                   src={product.imageUrl}
                   alt={product.title}
-                  className={`object-fill transition-opacity duration-300 ${
+                  className={`object-contain transition-opacity duration-300 ${
                     imageLoading ? "opacity-0" : "opacity-100"
                   }`}
                   sizes="(max-width: 1024px) 100vw, 66vw"
