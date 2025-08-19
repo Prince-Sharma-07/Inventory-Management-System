@@ -127,7 +127,7 @@ export default function Page({ params }: { params: Param }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black/90 flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-black/90 flex items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
           <div className="relative">
             <div className="w-12 h-12 border-3 border-gray-800 border-t-purple-500 rounded-full animate-spin"></div>
@@ -142,7 +142,7 @@ export default function Page({ params }: { params: Param }) {
 
   if (!product) {
     return (
-      <div className="min-h-[calc(100vh-64px)] bg-black/90 flex items-center justify-center">
+      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
         <div className="text-center">
           <Package className="w-16 h-16 mx-auto text-gray-600 mb-4" />
           <h2 className="text-xl font-semibold text-white mb-2">

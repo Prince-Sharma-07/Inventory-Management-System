@@ -28,7 +28,12 @@ export async function loginUser(
     if (!user) return false;
     if (user?.password == args.password) {
       const token = createToken({ id: user.id });
-      cookie.set("token", token);
+      cookie.set("token", token, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+      });
       return true;
     } else {
       return false;
@@ -184,7 +189,7 @@ export async function updateAvatar(
     });
     if (res.id) return true;
   } catch (err: any) {
-    console.log("err while updating avatar ," , err.message);
+    console.log("err while updating avatar ,", err.message);
     return false;
   }
 }
