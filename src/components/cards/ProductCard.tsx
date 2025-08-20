@@ -29,9 +29,10 @@
 // }
 
 import React from "react";
-import Image from "next/image";
+
 import { Product } from "../../../generated/prisma";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ProductCard({ product } : { product: Product }) {
   const formatPrice = (price: number) => {
@@ -41,13 +42,14 @@ export default function ProductCard({ product } : { product: Product }) {
       minimumFractionDigits: 2,
     }).format(price);
   };
-
+  const url = product.imageUrl
   return (
     <div className="flex h-16 sm:h-17 md:h-18 lg:h-19 xl:h-20 shadow-card dark:bg-gray-950 w-full rounded-md">
       <div className="flex h-full justify-between items-center w-full">
+       
         <Image
-          src={product.imageUrl}
-          alt={product.title}
+          src={url || "/fallback.png"}
+          alt={product?.title || "fallback"}
           width={106}
           height={100}
           className="object-contain h-full rounded-l-md"

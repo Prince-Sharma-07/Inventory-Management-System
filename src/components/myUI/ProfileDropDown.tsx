@@ -187,7 +187,7 @@ export default function ProfileDropDown() {
                     />
                   ) : (
                     <Avatar
-                      size={"8"}
+                      size={"3"}
                       radius="full"
                       fallback={user?.name[0].toUpperCase() || ""}
                     />
@@ -219,7 +219,7 @@ export default function ProfileDropDown() {
                     />
                   ) : (
                     <Avatar
-                      size={"8"}
+                      size={"3"}
                       radius="full"
                       fallback={user?.name[0].toUpperCase() || ""}
                     />
@@ -245,7 +245,7 @@ export default function ProfileDropDown() {
                     />
                   ) : (
                     <Avatar
-                      size={"8"}
+                      size={"3"}
                       radius="full"
                       fallback={user?.name[0].toUpperCase() || ""}
                     />
