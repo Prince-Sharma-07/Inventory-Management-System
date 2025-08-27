@@ -63,6 +63,11 @@ export default function Login() {
               <CardDescription>
                 Enter your username or email below to login to your account
               </CardDescription>
+              <CardDescription>
+                For Guest login!<br/> 
+                Email: guest@ims.com<br/>
+                Password: Guest@123
+              </CardDescription>
             </div>
             <div className="relative h-16 min-w-16 rounded-full">
               <Image fill src={"/storelogo.png"} alt="Store_logo" />
@@ -95,12 +100,12 @@ export default function Login() {
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a
+                  {/* <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
                     Forgot your password?
-                  </a>
+                  </a> */}
                 </div>
                 <Input
                   id="password"
@@ -113,14 +118,6 @@ export default function Login() {
               </div>
             </div>
           </form>
-          <CardAction>
-            <div className="text-sm mt-2 flex gap-1">
-              New user?
-              <Link href={"/signup"} className="hover:underline">
-                Register
-              </Link>
-            </div>
-          </CardAction>
         </CardContent>
 
         <CardFooter className="flex-col gap-2">

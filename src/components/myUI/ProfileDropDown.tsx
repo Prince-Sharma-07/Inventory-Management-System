@@ -282,7 +282,7 @@ export default function ProfileDropDown() {
 
             <DropdownMenuItem
               onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer focus:bg-red-50 dark:focus:bg-red-900/20"
+              className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-400 dark:hover:bg-red-400 cursor-pointer focus:bg-red-300 dark:focus:bg-red-400"
             >
               <LogOut className="w-4 h-4" />
               Sign Out
