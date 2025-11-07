@@ -18,7 +18,6 @@ export default function UserContextProvider({
   currUser: UserWithoutPassword | null;
 }) {
   const [user, setUser] = useState<UserWithoutPassword | null>(currUser);
-  console.log("user in context->" , user)
   return (
     <userContext.Provider value={{ user, setUser }}>
       {children}

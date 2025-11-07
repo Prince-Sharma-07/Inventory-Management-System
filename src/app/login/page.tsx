@@ -2,19 +2,17 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LOGIN } from "@/lib/gql/queries";
 import gqlClient from "@/lib/services/graphQL";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -65,8 +63,8 @@ export default function Login() {
               </CardDescription>
               <CardDescription>
                 For Guest login!<br/> 
-                Email: guest@ims.com<br/>
-                Password: Guest@123
+                Email: admin07@ims.com<br/>
+                Password: Admin@123
               </CardDescription>
             </div>
             <div className="relative h-16 min-w-16 rounded-full">
@@ -100,12 +98,6 @@ export default function Login() {
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  {/* <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a> */}
                 </div>
                 <Input
                   id="password"
@@ -122,11 +114,8 @@ export default function Login() {
 
         <CardFooter className="flex-col gap-2">
           <Button disabled={loading} onClick={handleLogin} className="w-full cursor-pointer">
-            Login
+            {loading ? <span className="loading loading-dots loading-sm"></span> : <>Login</>}
           </Button>
-          {/* <Button variant="outline" className="w-full">
-          Login with Google
-        </Button> */}
         </CardFooter>
       </Card>
     </div>

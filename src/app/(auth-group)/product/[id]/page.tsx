@@ -1,75 +1,3 @@
-// import ProductSaleChart from "@/components/myUI/ProductSaleChart";
-// import { SaleProductBtn } from "@/components/myUI/SaleProductBtn";
-// import { GET_PRODUCT } from "@/lib/gql/queries";
-// import gqlClient from "@/lib/services/graphQL";
-// import { ProductWithSales } from "@/types";
-// import Image from "next/image";
-// import { notFound } from "next/navigation";
-
-// type Param = Promise<{
-//   id: string;
-// }>;
-
-// export default async function page({ params }: { params: Param }) {
-//   const { id } = await params;
-
-//   let product;
-//   try {
-//     const res: {
-//       product: ProductWithSales;
-//     } = await gqlClient.request(GET_PRODUCT, { id });
-//     if (res?.product) {
-//       product = res.product;
-//     } else {
-//       notFound();
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     notFound();
-//   }
-
-//   const chartData =
-//     product?.sales.map((sale) => {
-//       const date = new Date(Number(sale.createdAt));
-//       const format =
-//         date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-//       const quantity = sale.quantity;
-//       const obj = {
-//         date: format,
-//         quantity,
-//       };
-//       return obj;
-//     }) || [];
-//   return (
-//     <div className="w-full h-[85vh] min-h-[85vh] p-6 ">
-//       <div className="flex justify-between h-[80%] w-full">
-//         <div className="w-[35%] h-full p-4">
-//           <div className="relative h-full w-full">
-//             <Image fill src={product.imageUrl} alt={"product_image"} />
-//           </div>
-//         </div>
-//         <div className="w-[25%] p-4 flex flex-col gap-4 items-center justify-between">
-//           <div className="flex flex-col gap-4 items-center">
-//           <h1 className="text-4xl font-bold">{product.title}</h1>
-//           <p className="text-lg">Description: {product.description}</p>
-//           <span>Price: ${product.price}</span>
-//           <span>Stocks: {product.stock}</span>
-//           <span className="border border-white rounded-2xl w-fit min-w-10 py-0.5 px-3">
-//             {product.category}
-//           </span>
-//           </div>
-//            <SaleProductBtn product={product} />
-//         </div>
-
-//         <div className="flex flex-col gap-4 w-[40%] items-center">
-
-//           <ProductSaleChart chartData={chartData} />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 import DeleteProdBtn from "@/components/myUI/DeleteProdBtn";
 import { EditProductBtn } from "@/components/myUI/EditProductBtn";
@@ -225,7 +153,7 @@ export default function Page({ params }: { params: Param }) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           <div className="lg:col-span-2">
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden">
-              <div className="aspect-video relative bg-gray-800">
+              <div className="relative bg-gray-800">
                 {imageLoading && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-8 h-8 border-2 border-gray-700 border-t-purple-500 rounded-full animate-spin"></div>

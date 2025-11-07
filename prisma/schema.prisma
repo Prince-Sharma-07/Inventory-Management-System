@@ -55,8 +55,8 @@ model Product {
 
 model Sale {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  productId String   @db.ObjectId
-  product   Product @relation(fields: [productId], references: [id],  onDelete: Cascade)
+  productId String?   @db.ObjectId
+  product   Product? @relation(fields: [productId], references: [id],  onDelete: Cascade)
   quantity  Int      @default(1)
   createdAt DateTime @default(now())
 }

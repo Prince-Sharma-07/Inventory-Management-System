@@ -1,137 +1,23 @@
-// "use client";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuGroup,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparator,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
-// import { useUserContext } from "@/contexts/UserContextProvider";
-// import { LOGOUT } from "@/lib/gql/queries";
-// import gqlClient from "@/lib/services/graphQL";
-// import { Avatar, Box, Card, Flex, Text } from "@radix-ui/themes";
-// import { LogOutIcon, UserIcon } from "lucide-react";
-// import Link from "next/link";
-// import { toast } from "sonner";
-// import { Button } from "../ui/button";
-
-// export default function ProfileDropDown() {
-//   const { user, setUser } = useUserContext();
-
-//   async function handleLogout() {
-//     try {
-//       const res: {
-//         logoutUser: boolean;
-//       } = await gqlClient.request(LOGOUT);
-//       if (res?.logoutUser) {
-//         toast("User logged out successfully!");
-//         setUser(null);
-//         window.location.href = "/";
-//       } else {
-//         toast("something went wrong!");
-//       }
-//     } catch (err: any) {
-//       console.log(err.message);
-//       toast("something went wrong!");
-//     }
-//   }
-
-//   return (
-//     <>
-//       {!user?.id ? (
-//         <div className="flex gap-4 items-center font-medium">
-//           <Button className="font-bold cursor-pointer">
-//             <Link href={"/login"} className="font-medium">
-//               Login
-//             </Link>
-//           </Button>
-//         </div>
-//       ) : (
-//         <DropdownMenu>
-//           <DropdownMenuTrigger asChild>
-//             <Box
-//               maxWidth="240px"
-//               className="border-1 border-white rounded-md border-none md:w-40"
-//             >
-//               <div className="max-md:hidden">
-//               <Card>
-//                 <Flex gap="3" align="center">
-//                   <Avatar
-//                     size={"2"}
-//                     radius="full"
-//                     fallback={user?.name[0].toUpperCase() || ""}
-//                   />
-//                   <Box>
-//                     <Text as="div" size="1" weight="bold">
-//                       {user?.name}
-//                     </Text>
-//                     <Text as="div" size="1" color="gray">
-//                       {user?.role}
-//                     </Text>
-//                   </Box>
-//                 </Flex>
-//               </Card>
-//               </div>
-//               <span className="md:hidden">
-//               <Avatar
-//               size={"3"}
-//               radius="full"
-//               fallback={user?.name[0].toUpperCase() || ""}
-//             />
-//             </span>
-//             </Box>
-
-//           </DropdownMenuTrigger>
-//           <DropdownMenuContent
-//             className="md:w-40 bg-[#18191B] text-white border font-medium"
-//             align="start"
-//           >
-//             <DropdownMenuLabel>My Account</DropdownMenuLabel>
-//             <DropdownMenuGroup>
-//               <DropdownMenuItem>
-//                 <Link
-//                   className="flex gap-2 items-center w-full"
-//                   href={"/profile"}
-//                 >
-//                   <UserIcon className="dark:text-white" /> Profile
-//                 </Link>
-//               </DropdownMenuItem>
-//             </DropdownMenuGroup>
-//             <DropdownMenuSeparator />
-//             <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
-//               <LogOutIcon className="dark:text-white" /> Logout
-//             </DropdownMenuItem>
-//           </DropdownMenuContent>
-//         </DropdownMenu>
-//       )}
-//     </>
-//   );
-// }
-
 "use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { useUserContext } from "@/contexts/UserContextProvider";
 import { LOGOUT } from "@/lib/gql/queries";
 import gqlClient from "@/lib/services/graphQL";
 import { Avatar } from "@radix-ui/themes";
-import { LogOut, User, ChevronDown } from "lucide-react";
-import Image from "next/image";
+import { ChevronDown, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
 export default function ProfileDropDown() {
   const { user, setUser } = useUserContext();
-  console.log("This is our user in profile drop down:" ,user)
+  
   async function handleLogout() {
     try {
       const res: {
@@ -282,7 +168,7 @@ export default function ProfileDropDown() {
 
             <DropdownMenuItem
               onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-400 dark:hover:bg-red-400 cursor-pointer focus:bg-red-300 dark:focus:bg-red-400"
+              className="flex items-center gap-2 px-3 py-2 font-medium text-sm text-red-400 dark:text-red-400 hover:bg-red-600 dark:hover:bg-red-800 cursor-pointer focus:bg-red-600 dark:focus:bg-red-400"
             >
               <LogOut className="w-4 h-4" />
               Sign Out
